@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: g++.exe build active file",
+            "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${fileDirname}\\main.cpp",
+                "${fileDirname}\\Float.cpp",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": "build",
+            "detail": "Компилятор: g++.exe"
+        },
+        {
+            "type": "shell",
+            "label": "C/C++: g++.exe сборка активного файла",
+            "command": "powershell",
+            "args": [
+                "-Command",
+                "& 'C:\\msys64\\ucrt64\\bin\\g++.exe' -fdiagnostics-color=always -g (Get-ChildItem '${fileDirname}' -Filter '*.cpp' | ForEach-Object { $_.FullName }) -o '${fileDirname}\\${fileBasenameNoExtension}.exe'"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Собирает все .cpp файлы в папке"
+        }
+    ]
+}

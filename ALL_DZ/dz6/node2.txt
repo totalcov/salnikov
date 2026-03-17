@@ -1,0 +1,10 @@
+this_is_var1
+var2
+**error**
+**error**
+var99
+aBCD
+v_ar98
+**error**
+ab_cd_e_a
+**error**
