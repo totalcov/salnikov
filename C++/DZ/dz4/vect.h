@@ -2,8 +2,15 @@
 #include <iostream>
 #include "MySatun.h"
 
-
 void errron(const char* p);
+
+// Forward declaration
+template <typename T>
+class Vector;
+
+// operator<< для Vector - нужен для вложенных векторов
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& vec);
 
 template <typename T>
 class Vector {
@@ -12,7 +19,23 @@ private:
     int sz;
 
 public:
-    // Конструктор с размером
+    
+    template <typename... Args>
+    Vector(int s, Args... args) {
+        if (s < 1) errron("invalid size");
+        sz = s;
+        v = new T[sz];  // Выделяем память БЕЗ инициализации
+        if (v == 0) errron("bad alloc");
+        
+        // Инициализируем каждый элемент с переданными аргументами
+        for (int i = 0; i < sz; i++) {
+            new (&v[i]) T(args...);  
+        }
+    }
+
+
+
+// Конструктор с размером
     Vector(int s) {
         if (s < 1) errron("invalid size");
         sz = s;
@@ -21,7 +44,8 @@ public:
     }
 
     // Дефолтный конструктор
-    Vector() : Vector(99) {
+    Vector() : Vector(99){
+
     }
 
     // Конструктор копирования
@@ -31,7 +55,7 @@ public:
     }
 
     // Конструктор перемещения
-    Vector(Vector&& other) {
+    Vector(Vector&& other) noexcept {
         v = other.v;
         sz = other.sz;
         other.v = nullptr;
@@ -44,7 +68,7 @@ public:
     }
 
     // Размер вектора
-    inline int size() { return sz; }
+    inline int size() const { return sz; }
 
     // Доступ по индексу с проверкой
     T& operator[](int i) {
@@ -52,19 +76,28 @@ public:
         return v[i];
     }
 
+    // Константный доступ по индексу
+    const T& operator[](int i) const {
+        if (i < 0 || i >= sz) errron("invalid index");
+        return v[i];
+    }
+
     // Присваивание копированием
     Vector& operator=(const Vector& other) {
         if (this == &other) return *this;
-        if (sz != other.sz) errron("size mismatch");
+        if (sz != other.sz){
+            delete[] v;
+            sz = other.sz;
+            v = new T[sz];
+        }
         for (int i = 0; i < sz; i++)
             v[i] = other.v[i];
         return *this;
     }
 
     // Присваивание перемещением
-    Vector& operator=(Vector&& other) {
+    Vector& operator=(Vector&& other) noexcept {
         if (this == &other) return *this;
-        if (sz != other.sz) errron("size mismatch");
         delete[] v;
         v = other.v;
         sz = other.sz;
@@ -74,7 +107,7 @@ public:
     }
 
     // Метод print - выводит все элементы
-    void print(void) {
+    void print(void) const {
         std::cout << "Vector[" << sz << "]: ";
         for (int i = 0; i < sz; i++) {
             std::cout << v[i];
@@ -90,6 +123,9 @@ public:
     // Вычитание векторов
     template <typename U>
     friend Vector<U> operator-(Vector<U>& a, Vector<U>& b);
+
+    // Оператор вывода для вложенных векторов
+    friend std::ostream& operator<< <T>(std::ostream& os, const Vector<T>& vec);
 };
 
 // Сложение
@@ -112,11 +148,26 @@ Vector<T> operator-(Vector<T>& a, Vector<T>& b) {
     return res;
 }
 
+//Оператор вывода для Vector<T> - поддерживает вложенные векторы
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Vector<T>& vec) {
+    os << "Vector[" << vec.size() << "]: ";
+    for (int i = 0; i < vec.size(); i++) {
+        os << vec[i];
+        if (i < vec.size() - 1) os << ", ";
+    }
+    return os;
+}
+
+
+
+// Специализация print для MySatun
 template <>
-inline void Vector<MySatun>::print(void) {
+inline void Vector<MySatun>::print(void) const {
     std::cout << "Vector[" << sz << "]:";
     for (int i = 0; i < sz; i++) {
         std::cout << " [" << i << "] = ";
         v[i].print();
     }
+    std::cout << std::endl;
 }

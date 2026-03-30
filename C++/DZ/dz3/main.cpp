@@ -1,10 +1,11 @@
 #include "vect.h"
 
 int main() {
-    vect a(3);
+    vect a(4);
     a[0] = MySatun(1.0);
     a[1] = MySatun(2.0);
     a[2] = MySatun(3.0);
+    a[3] = MySatun(4.0);
 
     vect b(3);
     b[0] = MySatun(4.0);

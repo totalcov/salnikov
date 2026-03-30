@@ -22,5 +22,15 @@ int main() {
     vs[2] = MySatun(100000.0);  // насыщение
     vs.print(); 
     
+    Vector<Vector<int>> vv(2, 2);
+    vv[0] = Vector<int>(2);
+    vv[1] = Vector<int>(2);
+
+    vv[0][0] = 1;
+    vv[0][1] = 2;
+    vv[1][1] = 9; 
+    vv.print();
+
+
     return 0;
 }

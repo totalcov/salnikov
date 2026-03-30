@@ -38,8 +38,8 @@ void MySatun::print() const {
 
 MySatun operator+(MySatun a, MySatun b){
     MySatun res = MyDouble(a) + MyDouble(b);
-    res.saturate();//?????
-    res.satFlag = a.satFlag || b.satFlag || res.satFlag;//????
+    res.saturate();
+    res.satFlag = a.satFlag || b.satFlag || res.satFlag;
     return res;
 }
 

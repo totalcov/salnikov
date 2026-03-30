@@ -4,7 +4,7 @@
 
 
 void MySatun::saturate(){
-    // if (mant == 0) return;//?????
+    if (mant == 0) return;
 
     if (exp > MAX_EXP){
         satFlag = true;

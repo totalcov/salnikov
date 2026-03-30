@@ -20,6 +20,8 @@ public:
 
     void print() const;
 
+     void resize(int new_size);
+
     void operator=(const vect& other);    // присваивание копированием
     void operator=(vect&& other);         // присваивание перемещением
 
