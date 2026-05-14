@@ -1,0 +1,10 @@
+import pandas as pd
+
+
+url = 'https://www.cbr.ru/currency_base/daily'  
+tables = pd.read_html(url)
+print(f"Количество таблиц на странице: {len(tables)}")
+
+df = tables[0]  
+
+print(df.head())

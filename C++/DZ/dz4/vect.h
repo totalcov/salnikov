@@ -10,7 +10,7 @@ class Vector;
 
 // operator<< для Vector - нужен для вложенных векторов
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const Vector<T>& vec);
+ std::ostream& operator<<(std::ostream& os, const Vector<T>& vec);
 
 template <typename T>
 class Vector {
@@ -22,10 +22,10 @@ public:
     
     template <typename... Args>
     Vector(int s, Args... args) {
-        if (s < 1) errron("invalid size");
+        if (s < 1) throw std::invalid_argument("Неверный размер");
         sz = s;
         v = new T[sz];  // Выделяем память БЕЗ инициализации
-        if (v == 0) errron("bad alloc");
+        if (v == 0) throw std::bad_alloc();
         
         // Инициализируем каждый элемент с переданными аргументами
         for (int i = 0; i < sz; i++) {
@@ -37,10 +37,10 @@ public:
 
 // Конструктор с размером
     Vector(int s) {
-        if (s < 1) errron("invalid size");
+        if (s < 1) throw std::invalid_argument("Неверный размер");
         sz = s;
         v = new T[sz]();
-        if (v == 0) errron("bad alloc");
+        if (v == 0) throw std::bad_alloc();
     }
 
     // Дефолтный конструктор
@@ -72,13 +72,13 @@ public:
 
     // Доступ по индексу с проверкой
     T& operator[](int i) {
-        if (i < 0 || i >= sz) errron("invalid index");
+        if (i < 0 || i >= sz) throw std::out_of_range("Неверный индекс");
         return v[i];
     }
 
     // Константный доступ по индексу
     const T& operator[](int i) const {
-        if (i < 0 || i >= sz) errron("invalid index");
+        if (i < 0 || i >= sz) throw std::out_of_range("Неверный индекс");
         return v[i];
     }
 
@@ -131,7 +131,7 @@ public:
 // Сложение
 template <typename T>
 Vector<T> operator+(Vector<T>& a, Vector<T>& b) {
-    if (a.sz != b.sz) errron("size mismatch");
+    if (a.sz != b.sz) throw std::invalid_argument("Несоответствие размеров");
     Vector<T> res(a.sz);
     for (int i = 0; i < a.sz; i++)
         res.v[i] = a.v[i] + b.v[i];
@@ -141,7 +141,7 @@ Vector<T> operator+(Vector<T>& a, Vector<T>& b) {
 // Вычитание
 template <typename T>
 Vector<T> operator-(Vector<T>& a, Vector<T>& b) {
-    if (a.sz != b.sz) errron("size mismatch");
+    if (a.sz != b.sz) throw std::invalid_argument("Несоответствие размеров");
     Vector<T> res(a.sz);
     for (int i = 0; i < a.sz; i++)
         res.v[i] = a.v[i] - b.v[i];

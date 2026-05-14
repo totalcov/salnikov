@@ -4,5 +4,6 @@
     "python.analysis.extraPaths": ["./app"],
     "terminal.integrated.env.windows": {
         "PYTHONPATH": "${workspaceFolder}"
-    }
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system"
 }

@@ -48,3 +48,4 @@ for dishes in cook_book.values():
 print("Результат:")
 for (name, measure), quantity in total_ingredients.items():
     print(f"{name.capitalize()}: {quantity} {measure}")
+    

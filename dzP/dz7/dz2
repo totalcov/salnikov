@@ -1,0 +1,15 @@
+import pandas as pd
+power_df = pd.read_csv('dzP/dz7/power.csv')  # Замените на правильный путь к файлу
+
+# Фильтруем данные по странам Прибалтики и по годам с 2005 по 2010 год
+a = ['Latvia', 'Lithuania', 'Estonia']
+hashiStrani = power_df[(power_df['country'].isin(a)) & (power_df['year'] >= 2005) & (power_df['year'] <= 2010)]
+
+# Исключаем отрицательные значения для quantity
+hashiStrani = hashiStrani[hashiStrani['quantity'] >= 0]
+
+# Считаем суммарное потребление энергии по всем категориям
+vsego = hashiStrani['quantity'].sum()
+
+# Выводим результат
+print(f"Общее суммарное потребление энергии по всем категориям: {vsego}")

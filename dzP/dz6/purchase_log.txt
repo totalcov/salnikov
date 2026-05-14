@@ -1,0 +1,7 @@
+{"user_id": "1840e0b9d4", "category": "Продукты"}
+{"user_id": "4e3fda9c5b", "category": "Электроника"}
+{"user_id": "9b2e8c1d55", "category": "Бытовая техника"}
+{"user_id": "c4f230c2a5", "category": "Досуг"}
+{"user_id": "463ba5e7a4", "category": "Бытовая техника"}
+{"user_id": "d1a2f22f01", "category": "Продукты"}
+{"user_id": "c6bd818cce", "category": "Одежда"}
